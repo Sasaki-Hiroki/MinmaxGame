@@ -107,7 +107,7 @@ input[type="radio"]:checked + label[for="Lev3"] {
     left: 27px;
     width: 420px;
     height: 420px;
-    background: #e1d3c983;
+    background: #edc3a683;
   }
   .line{
     position: absolute;
