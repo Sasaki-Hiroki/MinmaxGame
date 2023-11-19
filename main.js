@@ -210,9 +210,11 @@ function place_piece(action) {
 
 function addClickIvent(){
     document.getElementById("reset").addEventListener('click', () => {
-        const v = document.getElementById(`v${minmax}`);
-        v.style.borderColor = "#000000";
-        v.style.borderInlineWidth = "2px";
+        if (minmax != null) {
+            const v = document.getElementById(`v${minmax}`);
+            v.style.borderColor = "#000000";
+            v.style.borderInlineWidth = "2px";
+        }
         state = new State();
         player_flag = false;
         reset_flag = true;
