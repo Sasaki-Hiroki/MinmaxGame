@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="discription" content="数学的ゲーム・パズルが遊べます">
+  <title>Minmaxゲーム</title>
+  <!-- <link rel="icon" href="img/icon.jpg"> -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="apple-touch-icon" href="img/home_icon.png">
+  <!-- <meta name="apple-mobile-web-app-title" content="CATENA"> -->
+</head>
+<body>
+  <header>
+    <time id="modify"></time>
+    <h1>- Minmaxゲーム -</h1>
+  </header>
+  <p>CPU対戦ができるよ！先後とCPUレベルを選択してPlayを押してね！</p>
+  <div class="option">
+    <form name="Teban">
+      <input type="radio" name="teban" value="0" id="sente" checked>
+      <label for="sente" class="label">先手</label>
+      <input type="radio" name="teban" value="1" id="gote">
+      <label for="gote" class="label">後手</label>
+    </form>
+    <form name="Level">
+      <input type="radio" name="level" value="1" id="Lev1" checked>
+      <label for="Lev1" class="label">ふつう</label>
+      <input type="radio" name="level" value="2" id="Lev2">
+      <label for="Lev2" class="label">つよい</label>
+      <input type="radio" name="level" value="3" id="Lev3">
+      <label for="Lev3" class="label">やばい</label>
+    </form>
+  </div>
+  <div class="wrap">
+    <div class="wrapper1">
+      <div class="num even" id="n2">2</div>
+      <div class="num even" id="n4">4</div>
+      <div class="num even" id="n6">6</div>
+      <div class="num even" id="n8">8</div>
+      <div class="num even" id="n10">10</div>
+      <div class="num even" id="n12">12</div>
+    </div>
+    <div class="board">
+      <div id="square"></div>
+      <div class="num mass" id="v0"></div>
+      <div class="num mass" id="v1"></div>
+      <div class="num mass" id="v2"></div>
+      <div class="num mass" id="v3"></div>
+      <div class="num mass" id="v4"></div>
+      <div class="num mass" id="v5"></div>
+      <div class="num mass" id="v6"></div>
+      <div class="num mass" id="v7"></div>
+      <div class="num mass" id="v8"></div>
+      <div class="num mass" id="v9"></div>
+      <div class="num mass" id="v10"></div>
+      <div class="num mass" id="v11"></div>
+      <div class="num mass" id="v12">0</div>
+      <div class="num mass" id="v13">13</div>
+      <div class="num mass" id="v14">0</div>
+      <div class="num mass" id="v15">13</div>
+      <div class="line" id="l1"></div>
+      <div class="line" id="l2"></div>
+      <div class="line" id="l3"></div>
+      <div class="line" id="l4"></div>
+      <div class="line" id="l5"></div>
+      <div class="line" id="l6"></div>
+      <div class="line" id="l7"></div>
+      <div class="line" id="l8"></div>
+      <div class="line" id="l9"></div>
+      <div class="line" id="l10"></div>
+      <div class="line" id="l11"></div>
+      <div class="line" id="l12"></div>
+      <div class="line" id="l13"></div>
+      <div class="line" id="l14"></div>
+      <div class="line" id="l15"></div>
+      <div class="line" id="l16"></div>
+      <div class="line" id="l17"></div>
+      <div class="line" id="l18"></div>
+      <div class="line" id="l19"></div>
+      <div class="line" id="l20"></div>
+      <div class="line" id="l21"></div>
+      <div class="line" id="l22"></div>
+      <div class="line" id="l23"></div>
+      <div class="line" id="l24"></div>
+      <div class="line" id="l25"></div>
+      <div class="line" id="l26"></div>
+      <div class="line" id="l27"></div>
+      <div class="line" id="l28"></div>
+      <div class="line" id="l29"></div>
+      <div class="line" id="l30"></div>
+      <div class="line" id="l31"></div>
+      <div class="line" id="l32"></div>
+      <div class="line" id="l33"></div>
+      <div class="line" id="l34"></div>
+      <div class="line" id="l35"></div>
+      <div class="line" id="l36"></div>
+      <div class="line" id="l37"></div>
+      <div class="line" id="l38"></div>
+      <div class="line" id="l39"></div>
+      <div class="line" id="l40"></div>
+      <div class="line" id="l41"></div>
+      <div class="line" id="l42"></div>
+    </div>
+    <div class="wrapper2">
+      <div class="num odd" id="n1">1</div>
+      <div class="num odd" id="n3">3</div>
+      <div class="num odd" id="n5">5</div>
+      <div class="num odd" id="n7">7</div>
+      <div class="num odd" id="n9">9</div>
+      <div class="num odd" id="n11">11</div>
+    </div>
+  </div>
+  <div class="start">
+    <button type="button" class="btn" id="play">Play</button>
+    <button type="button" class="btn" id="reset">Reset</button>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
