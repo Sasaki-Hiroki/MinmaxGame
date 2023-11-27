@@ -9,6 +9,12 @@ const date = last.getDate();
 const target = document.getElementById('modify');
 target.textContent = year + '-' + month + '-' + date;
 
+/* ルール概要 */
+const dt = document.querySelector("dt");
+dt.addEventListener("click", () => {
+  dt.parentNode.classList.toggle("appear");
+})
+
 // 13,15は除外
 const graph = [
     [1, 2, 8, 11, 7, 12],
@@ -171,7 +177,7 @@ function mcts_action(state) {
                     v = child_node.w/child_node.n + even*Math.sqrt(2*Math.log(t)/(child_node.n));
                 }
                 else {
-                    v = (even == 1) ? 100 : -100;
+                    v = even*100;
                 }
                 ucb_values.push(v);
             });
@@ -210,11 +216,10 @@ function place_piece(action) {
 
 function addClickIvent(){
     document.getElementById("reset").addEventListener('click', () => {
-        if (minmax != null) {
-            const v = document.getElementById(`v${minmax}`);
-            v.style.borderColor = "#000000";
-            v.style.borderInlineWidth = "2px";
-        }
+        document.getElementById("win").style.display = "none";
+        const v = document.getElementById(`v${minmax}`);
+        v.style.borderColor = "#000000";
+        v.style.borderInlineWidth = "2px";
         state = new State();
         player_flag = false;
         reset_flag = true;
@@ -234,7 +239,6 @@ function addClickIvent(){
     document.getElementById("play").addEventListener('click', () => {
         if (reset_flag) {
             reset_flag = false;
-            let teban, level;
             const teban_lst = document.Teban.teban;
             for (let i = 0; i < teban_lst.length; i++) {
                 if (teban_lst[i].checked) {
@@ -250,15 +254,14 @@ function addClickIvent(){
                 }
             }
             if (level == 1) {
-                EVALUATE_COUNT = 100;
+                EVALUATE_COUNT = 80;
             }
             else if (level == 2) {
-                EVALUATE_COUNT = 2000;
+                EVALUATE_COUNT = 1000;
             }
             else {
                 EVALUATE_COUNT = 30000;
             }
-            console.log(EVALUATE_COUNT);
             for (let i = 0; i < 12; i++) {
                 document.getElementById(`v${i}`).style.cursor = "pointer";
             }
@@ -279,34 +282,52 @@ function addClickIvent(){
     for (let i = 1; i < 13; i++) {
         const num = document.getElementById(`n${i}`);
         num.addEventListener('click', () => {
-            a0 = i;
+            if (player_flag && state.pieces.includes(i)) {
+                num.classList.add("scale");
+                if (a0 != null && a0 != i) {
+                    document.getElementById(`n${a0}`).classList.remove("scale");
+                }
+                a0 = i;
+            }
         })
     }
     for (let i = 0; i < 12; i++) {
-        const v = document.getElementById(`v${i}`);
-        v.addEventListener('click', () => {
+        document.getElementById(`v${i}`).addEventListener('click', () => {
             a1 = i;
-            if (player_flag && state.pieces.includes(a0) && state.vertices[a1] == null) {
+            if (player_flag && a0 != null && state.vertices[a1] == null) {
                 const action = [a0, a1];
                 place_piece(action);
                 document.getElementById(`n${action[0]}`).style.cursor = "auto";
+                document.getElementById(`n${action[0]}`).classList.remove("scale");
+                a0 = null;
                 state = state.next(action);
                 player_flag = false;
                 (state.is_done()) ? fin() : cpu();
             }
         })
     }
+    document.getElementById("close_btn").addEventListener('click', () => {
+        document.getElementById("win").style.display = "none";
+    })
 }
 
 function cpu() {
-    // const action = random_action(state);
-    const action = mcts_action(state);
+    let action;
+    if (level == 1 && state.pieces.length == 6){
+        action = random_action(state);
+        console.log("rand");
+    }
+    else {
+        action = mcts_action(state);
+    }
     place_piece(action);
     state = state.next(action);
     (state.is_done()) ? fin() : player_flag = true;
 }
 
 function fin() {
+    document.getElementById("winer").textContent = (state.minmax()%2 == teban) ? "YOU WIN!" : "CPU WIN";
+    document.getElementById("win").style.display = "block";
     minmax = state.vertices.indexOf(state.minmax());
     const v = document.getElementById(`v${minmax}`);
     v.style.borderColor = "yellow";
@@ -315,13 +336,14 @@ function fin() {
 
 const startTime = Date.now(); // 開始時間
 
+let teban, level;
 let state = new State();
 let player_flag = false;
 let reset_flag = true;
 let a0 = null;
 let a1 = null;
-let minmax = null;
-let EVALUATE_COUNT = 10000;
+let minmax = 0;
+let EVALUATE_COUNT = 1000;
 
 addClickIvent();
 

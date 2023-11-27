@@ -15,6 +15,49 @@ h1{
 p{
   text-align: center;
 }
+
+/* ルール */
+#rule {
+  text-align: left;
+}
+dl > div {
+  text-align: center;
+}
+dt {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+dt::before {
+  content: "▼";
+  transition: transform .3s;
+  position: absolute;
+  left: calc(50% - 50px);
+}
+dl > div.appear dt::before {
+  transform: scale(1, -1);
+}
+dd {
+  padding: 8px;
+  margin: 0;
+  display: none;
+  background-color: lemonchiffon;
+}
+dl > div.appear dd {
+  display: block;
+  animation: .3s fadeIn;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .option{ 
   display: flex;
   justify-content: center;
@@ -65,15 +108,10 @@ input[type="radio"]:checked + label[for="Lev3"] {
   align-items: center;
   justify-content: space-around;
   margin: 0 auto;
-  /* border: 2px solid #949593; */
   width:700px;
   height:520px;
 }
-.wrapper1 {
-  display: flex;
-  flex-flow: column;
-}
-.wrapper2 {
+.wrap2 {
   display: flex;
   flex-flow: column;
 }
@@ -87,20 +125,75 @@ input[type="radio"]:checked + label[for="Lev3"] {
   user-select: none;
   font-size:24px;
 }
-.even{
+.even {
   color: #ffffff;
   background: #ED1A3D;
   margin:5px;
 }
-.odd{
+.odd {
   color: #ffffff;
   background: #31A9EE;
   margin:5px;
+}
+.even.scale,
+.odd.scale {
+  width:58px;
+  height:58px;
+  line-height:58px;
+  font-size:29px;
+  margin: 1px;
 }
 .board{
   width:470px;
   height:470px;
   position:relative;
+  /* ゲーム終了表示 */
+#win {
+  width: 200px;
+  height: 70px;
+  text-align:center;
+  line-height: 25px;
+  background-color: #fff;
+  font-size: 18pt;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  user-select: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 2;
+  display: none;
+  }
+  #close_btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: red;
+    cursor: pointer;
+  }
+  #close_btn::before,
+  #close_btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 16px;
+    background-color: #fff;
+  }
+  #close_btn::before {
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+  #close_btn::after {
+    transform: translate(-50%,-50%) rotate(-45deg);
+  }
   #square{
     position:absolute;
     top: 27px;
@@ -482,7 +575,7 @@ input[type="radio"]:checked + label[for="Lev3"] {
     background: #31A9EE;
   }
 }
-.start{
+.play{
   display: flex;
   justify-content: space-around;
   margin: 0 auto;
