@@ -8,15 +8,14 @@ const date = last.getDate();
 /* 日付を書き換える */
 const target = document.getElementById('modify');
 target.textContent = year + '-' + month + '-' + date;
-
-/* ルール概要 */
+/* ルール */
 const dt = document.querySelector("dt");
 dt.addEventListener("click", () => {
   dt.parentNode.classList.toggle("appear");
 })
 
 // 13,15は除外
-const graph = [
+const GRAPH = [
     [1, 2, 8, 11, 7, 12],
     [0, 12, 2],
     [0, 1, 3, 9, 8],
@@ -64,9 +63,9 @@ class State {
         for (let i = 1; i < 13; i++){
             const v = this.vertices.indexOf(i);
             marks[v] = 0;
-            const l = graph[v].length;
+            const l = GRAPH[v].length;
             for (let j_ = 0; j_ < l; j_++) {
-                const j = graph[v][j_];
+                const j = GRAPH[v][j_];
                 if ((marks[j] == 12 && marks[v] ==14) || (marks[j] == 14 && marks[v] == 12)) {
                     return i;
                 }
@@ -76,7 +75,7 @@ class State {
                     let stk = [v];
                     while (stk.length > 0) {
                         const x = stk.pop();
-                        graph[x].forEach(k => {
+                        GRAPH[x].forEach(k => {
                             if (marks[k] == 0) {
                                 marks[k] = t;
                                 stk.push(k);
@@ -190,7 +189,7 @@ function mcts_action(state) {
         }
     }
     const root_node = new node(state);
-    for (let i = 0; i < EVALUATE_COUNT; i++) {
+    for (let i = 0; i < evaluateCount; i++) {
         root_node.evaluate();
     }
     let max = -Infinity;
@@ -216,15 +215,13 @@ function place_piece(action) {
 
 function addClickIvent(){
     document.getElementById("reset").addEventListener('click', () => {
-        document.getElementById("win").style.display = "none";
+        document.getElementById("fin").style.display = "none";
         const v = document.getElementById(`v${minmax}`);
         v.style.borderColor = "#000000";
         v.style.borderInlineWidth = "2px";
-        state = new State();
-        player_flag = false;
-        reset_flag = true;
-        a0 = null;
-        a1 = null;
+        if (a0 != null) {
+            document.getElementById(`n${a0}`).classList.remove("scale");
+        }
         for (let i = 0; i < 12; i++) {
             const v = document.getElementById(`v${i}`);
             v.textContent = "";
@@ -235,10 +232,14 @@ function addClickIvent(){
             num.style.color = "#ffffff";
             num.style.background = (i%2 == 0) ? "#ED1A3D" : "#31A9EE";
         }
+        state = new State();
+        playerFlag = false;
+        resetFlag = true;
+        a0 = null;
     })
     document.getElementById("play").addEventListener('click', () => {
-        if (reset_flag) {
-            reset_flag = false;
+        if (resetFlag) {
+            resetFlag = false;
             const teban_lst = document.Teban.teban;
             for (let i = 0; i < teban_lst.length; i++) {
                 if (teban_lst[i].checked) {
@@ -254,13 +255,13 @@ function addClickIvent(){
                 }
             }
             if (level == 1) {
-                EVALUATE_COUNT = 80;
+                evaluateCount = 80;
             }
             else if (level == 2) {
-                EVALUATE_COUNT = 1000;
+                evaluateCount = 1000;
             }
             else {
-                EVALUATE_COUNT = 30000;
+                evaluateCount = 30000;
             }
             for (let i = 0; i < 12; i++) {
                 document.getElementById(`v${i}`).style.cursor = "pointer";
@@ -269,7 +270,7 @@ function addClickIvent(){
                 state.pieces.forEach(p => {
                     document.getElementById(`n${p}`).style.cursor = "pointer";
                 });
-                player_flag = true;
+                playerFlag = true;
             } 
             else {
                 state.enemy_pieces.forEach(p => {
@@ -282,7 +283,7 @@ function addClickIvent(){
     for (let i = 1; i < 13; i++) {
         const num = document.getElementById(`n${i}`);
         num.addEventListener('click', () => {
-            if (player_flag && state.pieces.includes(i)) {
+            if (playerFlag && state.pieces.includes(i)) {
                 num.classList.add("scale");
                 if (a0 != null && a0 != i) {
                     document.getElementById(`n${a0}`).classList.remove("scale");
@@ -293,21 +294,20 @@ function addClickIvent(){
     }
     for (let i = 0; i < 12; i++) {
         document.getElementById(`v${i}`).addEventListener('click', () => {
-            a1 = i;
-            if (player_flag && a0 != null && state.vertices[a1] == null) {
-                const action = [a0, a1];
+            if (playerFlag && a0 != null && state.vertices[i] == null) {
+                const action = [a0, i];
                 place_piece(action);
                 document.getElementById(`n${action[0]}`).style.cursor = "auto";
                 document.getElementById(`n${action[0]}`).classList.remove("scale");
-                a0 = null;
                 state = state.next(action);
-                player_flag = false;
+                a0 = null;
+                playerFlag = false;
                 (state.is_done()) ? fin() : cpu();
             }
         })
     }
     document.getElementById("close_btn").addEventListener('click', () => {
-        document.getElementById("win").style.display = "none";
+        document.getElementById("fin").style.display = "none";
     })
 }
 
@@ -322,30 +322,28 @@ function cpu() {
     }
     place_piece(action);
     state = state.next(action);
-    (state.is_done()) ? fin() : player_flag = true;
+    (state.is_done()) ? fin() : playerFlag = true;
 }
 
 function fin() {
-    document.getElementById("winer").textContent = (state.minmax()%2 == teban) ? "YOU WIN!" : "CPU WIN";
-    document.getElementById("win").style.display = "block";
+    document.getElementById("fin").style.display = "block";
+    document.getElementById("winner").textContent = (state.minmax()%2 == teban) ? "YOU WIN!" : "CPU WIN";
     minmax = state.vertices.indexOf(state.minmax());
     const v = document.getElementById(`v${minmax}`);
     v.style.borderColor = "yellow";
     v.style.borderInlineWidth = "6px";
 }
 
-const startTime = Date.now(); // 開始時間
-
 let teban, level;
 let state = new State();
-let player_flag = false;
-let reset_flag = true;
+let playerFlag = false;
+let resetFlag = true;
 let a0 = null;
-let a1 = null;
 let minmax = 0;
-let EVALUATE_COUNT = 1000;
+let evaluateCount = 1000;
 
 addClickIvent();
 
+const startTime = Date.now(); // 開始時間
 const endTime = Date.now(); // 終了時間
 console.log("time =", endTime - startTime);

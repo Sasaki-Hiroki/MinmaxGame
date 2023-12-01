@@ -17,12 +17,11 @@
     <h1>- Minmaxゲーム -</h1>
   </header>
   <p>CPU対戦ができるよ！先後とCPUレベルを選択してPlayを押してね！</p>
-
   <dl>
     <div>
       <dt><b>ルール</b></dt>
       <dd>
-        <ul id="rule">
+        <ul>
           <li><b>持ち駒</b>：先手は赤の偶数駒2,4,6,8,10,12、後手は青の偶数駒1,3,5,7,9,11です。</li>
           <li><b>ゲームの進行</b>：赤と青のプレイヤーが交互に自分の色の駒を駒を置いていきます。<br>
             お互いがすべての駒を置き終わったとき、以下の勝利判定を行います。</li>
@@ -31,12 +30,11 @@
           ここで、"Minmax"とは、2つの数字0を結ぶ各パスに対して、各パスの最小値の中の最大値、<br>
           "Maxmin"とは、2つの数字13を結ぶ各パスに対して、各パスの最大値の中の最小値をいいます。
         </ul>
-        <p>Minmaxゲームは、以下の数学的性質により引きわけが起こることはありません。</p>
+        <p>Minmaxゲームは、以下の数学的性質により引き分けが起こることはありません。</p>
         <p><b>定理</b>：Minmax=Maxmin</p>
       </dd>
     </div>
   </dl>
-
   <div class="option">
     <form name="Teban">
       <input type="radio" name="teban" value="0" id="sente" checked>
@@ -63,8 +61,8 @@
       <div class="num even" id="n12">12</div>
     </div>
     <div class="board">
-      <div id="win">
-        <p id="winer">YOU WIN!</p>
+      <div id="fin">
+        <span id="winner"></span>
         <div id="close_btn"></div>
       </div>
       <div id="square"></div>
@@ -121,11 +119,6 @@
       <div class="line" id="l35"></div>
       <div class="line" id="l36"></div>
       <div class="line" id="l37"></div>
-      <div class="line" id="l38"></div>
-      <div class="line" id="l39"></div>
-      <div class="line" id="l40"></div>
-      <div class="line" id="l41"></div>
-      <div class="line" id="l42"></div>
     </div>
     <div class="wrap2">
       <div class="num odd" id="n1">1</div>
@@ -136,7 +129,7 @@
       <div class="num odd" id="n11">11</div>
     </div>
   </div>
-  <div class="play">
+  <div class="play_reset">
     <button type="button" class="btn" id="play">Play</button>
     <button type="button" class="btn" id="reset">Reset</button>
   </div>

@@ -3,27 +3,24 @@
   display: inline-block;
   width: 15px;
   height: 15px;
-  background-image:url(./update_icon.png);
+  background-image: url(./update_icon.png);
   background-size: contain;
   vertical-align: -1px;
   margin-right: 2px;
 }
-h1{
+h1 {
   text-align: center;
   margin-top: 0;
 }
-p{
+p {
   text-align: center;
 }
 
 /* ルール */
-#rule {
-  text-align: left;
-}
-dl > div {
-  text-align: center;
-}
 dt {
+  width: 110px;
+  margin: 0 auto;
+  text-align: center;
   cursor: pointer;
   user-select: none;
   position: relative;
@@ -34,14 +31,15 @@ dt::before {
   position: absolute;
   left: calc(50% - 50px);
 }
-dl > div.appear dt::before {
-  transform: scale(1, -1);
-}
 dd {
+  margin: 0 auto;
+  width: 770px;
   padding: 8px;
-  margin: 0;
   display: none;
   background-color: lemonchiffon;
+}
+dl > div.appear dt::before {
+  transform: scale(1, -1);
 }
 dl > div.appear dd {
   display: block;
@@ -74,18 +72,13 @@ input[type="radio"]:checked + label[for="gote"] {
   background: #31A9EE;/* マウス選択時の背景色を指定する */
   color: #ffffff; /* マウス選択時のフォント色を指定する */
 }
-input[type="radio"]:checked + label[for="Lev1"] {
-  background: #949593;/* マウス選択時の背景色を指定する */
-  color: #ffffff; /* マウス選択時のフォント色を指定する */
-}
-input[type="radio"]:checked + label[for="Lev2"] {
-  background: #949593;/* マウス選択時の背景色を指定する */
-  color: #ffffff; /* マウス選択時のフォント色を指定する */
-}
+input[type="radio"]:checked + label[for="Lev1"],
+input[type="radio"]:checked + label[for="Lev2"],
 input[type="radio"]:checked + label[for="Lev3"] {
   background: #949593;/* マウス選択時の背景色を指定する */
   color: #ffffff; /* マウス選択時のフォント色を指定する */
 }
+
 .label {
   display: block; /* ブロックレベル要素化する */
   float: left; /* 要素の左寄せ・回り込を指定する */
@@ -108,51 +101,48 @@ input[type="radio"]:checked + label[for="Lev3"] {
   align-items: center;
   justify-content: space-around;
   margin: 0 auto;
-  width:700px;
-  height:520px;
+  width: 700px;
+  height: 520px;
 }
 .wrap2 {
   display: flex;
   flex-flow: column;
 }
 .num {
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  line-height:50px;
-  text-align:center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 50px;
+  text-align: center;
   border: 2px solid #000000;
   user-select: none;
-  font-size:24px;
+  font-size: 24px;
 }
 .even {
   color: #ffffff;
   background: #ED1A3D;
-  margin:5px;
+  margin: 5px;
 }
 .odd {
   color: #ffffff;
   background: #31A9EE;
-  margin:5px;
+  margin: 5px;
 }
 .even.scale,
 .odd.scale {
-  width:58px;
-  height:58px;
-  line-height:58px;
-  font-size:29px;
+  width: 58px;
+  height: 58px;
+  line-height: 58px;
+  font-size: 29px;
   margin: 1px;
 }
-.board{
-  width:470px;
-  height:470px;
-  position:relative;
-  /* ゲーム終了表示 */
-#win {
+
+/* ゲーム終了表示 */
+#fin {
   width: 200px;
   height: 70px;
-  text-align:center;
-  line-height: 25px;
+  text-align: center;
+  line-height: 70px;
   background-color: #fff;
   font-size: 18pt;
   border-radius: 5px;
@@ -166,428 +156,402 @@ input[type="radio"]:checked + label[for="Lev3"] {
   margin: auto;
   z-index: 2;
   display: none;
-  }
-  #close_btn {
+}
+#close_btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background-color: red;
+  cursor: pointer;
+}
+#close_btn::before,
+#close_btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 16px;
+  background-color: #fff;
+}
+#close_btn::before {
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+#close_btn::after {
+  transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+.board {
+  width: 470px;
+  height: 470px;
+  position: relative;
+  #square {
     position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 3;
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
-    background-color: red;
-    cursor: pointer;
-  }
-  #close_btn::before,
-  #close_btn::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 2px;
-    height: 16px;
-    background-color: #fff;
-  }
-  #close_btn::before {
-    transform: translate(-50%,-50%) rotate(45deg);
-  }
-  #close_btn::after {
-    transform: translate(-50%,-50%) rotate(-45deg);
-  }
-  #square{
-    position:absolute;
     top: 27px;
-    left: 27px;
-    width: 420px;
-    height: 420px;
+    left: 26px;
+    width: 417px;
+    height: 417px;
     background: #edc3a683;
+    border: 2px solid #000000;
   }
-  .line{
+  .line {
     position: absolute;
     height: 2px;
     background: #000000;
     z-index: 0;
   }
-  #l1{
-    top: 27px;
-    left: 27px;
-    width: 420px;
-  }
-  #l2{
-    top: 27px;
-    left: 27px;
-    width: 420px;
-    transform:rotate(90deg);
-    transform-origin: 0% 0%;
-  }
-  #l3{
+  #l1 {
     top: 27px;
     left: 27px;
     width: 217px;
-    transform:rotate(13deg);
+    transform: rotate(13deg);
     transform-origin: 0% 0%;
   }
-  #l4{
+  #l2 {
     top: 27px;
     left: 27px;
     width: 217px;
-    transform:rotate(77deg);
+    transform: rotate(77deg);
     transform-origin: 0% 0%;
   }
-  #l5{
+  #l3 {
     top: 27px;
     left: 27px;
     width: 143px;
-    transform:rotate(45deg);
+    transform: rotate(45deg);
     transform-origin: 0% 0%;
   }
-  #l6{
-    top: 445px;
-    left: 27px;
-    width: 420px;
-    transform:rotate(0deg);
-    transform-origin: 0% 0%;
-  }
-  #l7{
+  #l4 {
     top: 445px;
     left: 25px;
     width: 217px;
-    transform:rotate(-13deg);
+    transform: rotate(-13deg);
     transform-origin: 0% 0%;
   }
-  #l8{
+  #l5 {
     top: 445px;
     left: 25px;
     width: 217px;
-    transform:rotate(-77deg);
+    transform: rotate(-77deg);
     transform-origin: 0% 0%;
   }
-  #l9{
+  #l6 {
     top: 445px;
     left: 25px;
     width: 143px;
-    transform:rotate(-45deg);
+    transform: rotate(-45deg);
     transform-origin: 0% 0%;
   }
-  #l10{
-    top: 27px;
-    left: 447px;
-    width: 420px;
-    transform:rotate(90deg);
-    transform-origin: 0% 0%;
-  }
-  #l11{
+  #l7 {
     top: 29px;
     left: 447px;
     width: 217px;
-    transform:rotate(103deg);
+    transform: rotate(103deg);
     transform-origin: 0% 0%;
   }
-  #l12{
+  #l8 {
     top: 29px;
     left: 447px;
     width: 217px;
-    transform:rotate(167deg);
+    transform: rotate(167deg);
     transform-origin: 0% 0%;
   }
-  #l13{
-    top: 29px;
-    left: 447px;
-    width: 143px;
-    transform:rotate(135deg);
-    transform-origin: 0% 0%;
-  }
-  #l13{
+  #l9 {
     top: 447px;
     left: 445px;
     width: 217px;
-    transform:rotate(193deg);
+    transform: rotate(193deg);
     transform-origin: 0% 0%;
   }
-  #l14{
+  #l10 {
     top: 447px;
     left: 445px;
     width: 217px;
-    transform:rotate(257deg);
+    transform: rotate(257deg);
     transform-origin: 0% 0%;
   }
-  #l15{
+  #l11 {
     top: 447px;
     left: 445px;
     width: 143px;
     transform:rotate(225deg);
     transform-origin: 0% 0%;
   }
-  #l16{
+  #l12 {
     top: 127px;
     left: 127px;
     width: 220px;
-    transform:rotate(0deg);
+    transform: rotate(0deg);
     transform-origin: 0% 0%;
   }
-  #l17{
+  #l13 {
     top: 127px;
     left: 127px;
     width: 121px;
-    transform:rotate(25deg);
+    transform: rotate(25deg);
     transform-origin: 0% 0%;
   }
-  #l18{
+  #l14 {
     top: 127px;
     left: 127px;
     width: 121px;
-    transform:rotate(-25deg);
+    transform: rotate(-25deg);
     transform-origin: 0% 0%;
   }
-  #l19{
+  #l15 {
     top: 127px;
     left: 127px;
     width: 121px;
-    transform:rotate(65deg);
+    transform: rotate(65deg);
     transform-origin: 0% 0%;
   }
-  #l20{
+  #l16 {
     top: 127px;
     left: 127px;
     width: 121px;
-    transform:rotate(115deg);
+    transform: rotate(115deg);
     transform-origin: 0% 0%;
   }
-  #l21{
+  #l17 {
     top: 346px;
     left: 126px;
     width: 220px;
-    transform:rotate(0deg);
+    transform: rotate(0deg);
     transform-origin: 0% 0%;
   }
-  #l22{
+  #l18 {
     top: 346px;
     left: 126px;
     width: 121px;
-    transform:rotate(-25deg);
+    transform: rotate(-25deg);
     transform-origin: 0% 0%;
   }
-  #l23{
+  #l19 {
     top: 346px;
     left: 126px;
     width: 121px;
-    transform:rotate(-65deg);
+    transform: rotate(-65deg);
     transform-origin: 0% 0%;
   }
-  #l24{
+  #l20 {
     top: 346px;
     left: 126px;
     width: 121px;
-    transform:rotate(-115deg);
+    transform: rotate(-115deg);
     transform-origin: 0% 0%;
   }
-  #l25{
+  #l21 {
     top: 346px;
     left: 126px;
     width: 121px;
-    transform:rotate(25deg);
+    transform: rotate(25deg);
     transform-origin: 0% 0%;
   }
-  #l26{
+  #l22 {
     top: 347px;
     left: 346px;
     width: 121px;
-    transform:rotate(155deg);
+    transform: rotate(155deg);
     transform-origin: 0% 0%;
   }
-  #l27{
+  #l23 {
     top: 348px;
     left: 346px;
     width: 121px;
-    transform:rotate(205deg);
+    transform: rotate(205deg);
     transform-origin: 0% 0%;
   }
-  #l28{
+  #l24 {
     top: 348px;
     left: 346px;
     width: 121px;
-    transform:rotate(245deg);
+    transform: rotate(245deg);
     transform-origin: 0% 0%;
   }
-  #l29{
+  #l25 {
     top: 348px;
     left: 346px;
     width: 121px;
-    transform:rotate(295deg);
+    transform: rotate(295deg);
     transform-origin: 0% 0%;
   }
-  #l30{
+  #l26 {
     top: 128px;
     left: 348px;
     width: 121px;
-    transform:rotate(65deg);
+    transform: rotate(65deg);
     transform-origin: 0% 0%;
   }
-  #l31{
+  #l27 {
     top: 128px;
     left: 348px;
     width: 121px;
-    transform:rotate(115deg);
+    transform: rotate(115deg);
     transform-origin: 0% 0%;
   }
-  #l32{
+  #l28 {
     top: 128px;
     left: 348px;
     width: 121px;
-    transform:rotate(155deg);
+    transform: rotate(155deg);
     transform-origin: 0% 0%;
   }
-  #l33{
+  #l29 {
     top: 130px;
     left: 347px;
     width: 121px;
-    transform:rotate(205deg);
+    transform: rotate(205deg);
     transform-origin: 0% 0%;
   }
-  #l34{
+  #l30 {
     top: 128px;
     left: 345px;
     width: 143px;
-    transform:rotate(-45deg);
+    transform: rotate(-45deg);
     transform-origin: 0% 0%;
   }
-  #l35{
+  #l31 {
     top: 236px;
     left: 177px;
     width: 85px;
-    transform:rotate(45deg);
+    transform: rotate(45deg);
     transform-origin: 0% 0%;
   }
-  #l36{
+  #l32 {
     top: 236px;
     left: 177px;
     width: 85px;
-    transform:rotate(-45deg);
+    transform: rotate(-45deg);
     transform-origin: 0% 0%;
   }
-  #l37{
+  #l33 {
     top: 238px;
     left: 177px;
     width: 100px;
-    transform:rotate(180deg);
+    transform: rotate(180deg);
     transform-origin: 0% 0%;
   }
-  #l38{
+  #l34 {
     top: 236px;
     left: 296px;
     width: 100px;
-    transform:rotate(0deg);
+    transform: rotate(0deg);
     transform-origin: 0% 0%;
   }
-  #l39{
+  #l35 {
     top: 237px;
     left: 298px;
     width: 85px;
-    transform:rotate(135deg);
+    transform: rotate(135deg);
     transform-origin: 0% 0%;
   }
-  #l40{
+  #l36 {
     top: 239px;
     left: 296px;
     width: 85px;
-    transform:rotate(225deg);
+    transform: rotate(225deg);
     transform-origin: 0% 0%;
   }
-  #l41{
+  #l37 {
     top: 178px;
     left: 238px;
     width: 120px;
-    transform:rotate(90deg);
+    transform: rotate(90deg);
     transform-origin: 0% 0%;
   }
-  .mass{
+  .mass {
     z-index: 1;
     background: #ffffff;
     color: #ffffff;
     position: absolute;
   }
-  #v0{
+  #v0 {
     top: 320px;
     left: 100px;
   }
-  #v1{
+  #v1 {
     top: 370px;
     left: 210px;
   }
-  #v2{
+  #v2 {
     top: 320px;
     left: 320px;
   }
-  #v3{
+  #v3 {
     top: 210px;
     left: 370px;
   }
-  #v4{
+  #v4 {
     top: 100px;
     left: 320px;
   }
-  #v5{
+  #v5 {
     top: 50px;
     left: 210px;
   }
-  #v6{
+  #v6 {
     top: 100px;
     left: 100px;
   }
-  #v7{
+  #v7 {
     top: 210px;
     left: 50px;
   }
-  #v8{
+  #v8 {
     top: 270px;
     left: 210px;
   }
-  #v9{
+  #v9 {
     top: 210px;
     left: 270px;
   }
-  #v10{
+  #v10 {
     top: 150px;
     left: 210px;
   }
-  #v11{
+  #v11 {
     top: 210px;
     left: 150px;
   }
-  #v12{
+  #v12 {
     top: 420px;
     left: 0px;
     background: #ED1A3D;
   }
-  #v13{
+  #v13 {
     top: 420px;
     left: 420px;
     background: #31A9EE;
   }
-  #v14{
+  #v14 {
     top: 0px;
     left: 420px;
     background: #ED1A3D;
   }
-  #v15{
+  #v15 {
     top: 0px;
     left: 0px;
     background: #31A9EE;
   }
 }
-.play{
+
+.play_reset {
   display: flex;
   justify-content: space-around;
   margin: 0 auto;
   width: 300px;
-  margin-top: 10px;
 }
 .btn {
-  padding: 10px 20px;
+  width: 100px;
+  height: 50px;
   background: yellow;
   border-bottom: solid 5px gray;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   user-select: none;
  }
@@ -596,4 +560,3 @@ input[type="radio"]:checked + label[for="Lev3"] {
   transform: translateY(5px);
   border-bottom: none;
  }
-
